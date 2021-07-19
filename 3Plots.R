@@ -47,8 +47,7 @@ p = plotHeatMapGroup(d = scaled,
 
 ######################################################################################################
 
-
-
+## THIS WILL GENERATE PDF FILES
 df = generateDF(rawDat,sampleAnnot,metAnnot) # MASTER DF USED FOR ALL PLOTTING
 head(df)
 plotClassHeatmaps(df)
