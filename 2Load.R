@@ -6,15 +6,15 @@
 
 ######################################################################################################
 
-rawDat = read.csv('/Volumes/lab-anastasioud/home/users/clasenf/Lipodomics/dataset2/FedFastedPBQC_Input_renamed.csv',
+rawDat = read.csv('RAWDAT.CSV',
                   sep = ',',
                   header = T)
-sampleAnnot = read.csv('/Volumes/lab-anastasioud/home/users/clasenf/Lipodomics/dataset2/sampleAnnot.csv',
+sampleAnnot = read.csv('SAMPLEANNOT.CSV',
                        sep=',',
                        header = T)
-metAnnot = read.csv('/Volumes/lab-anastasioud/home/users/clasenf/Lipodomics/dataset2/metAnnot.csv',
-                       sep=',',
-                       header = T)
+metAnnot = read.csv('METANNOT.CSV',
+                    sep=',',
+                    header = T)
 
 
 row.names(rawDat) = rawDat[,1]
