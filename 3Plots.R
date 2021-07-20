@@ -2,9 +2,9 @@
 # THE DATA IS FIRST MEDIAN SCALED AND THEN LOG SCALED #
 scaled = scaleData(rawDat,logscale = T)
 
-         ################# PLOT HEATMAP ##########################
-####       SET THE COLORS FOR SOME ANNOTATIONS IF YOU WISH           ####
-# THIS NEEDS SOME MANUAL TWEAKING DEPENDENT ON HOW COLUMNS IS NAMED  ####
+################# PLOT HEATMAP ##########################
+#### SET THE COLORS FOR SOME ANNOTATIONS IF YOU WISH ####
+####      THIS NEEDS SOME MANUAL INTERVENTION        ####
 
 # Tissue
 Tissue = c('orange','darkred','darkgreen','black')
@@ -28,14 +28,11 @@ head(sampleAnnot)
 head(metAnnot)
 
 # PLOT ALL SPECIES
-# annoCol COULD BE OMITTED
 p = plotHeatMap(d = scaled,
                 sampleAnnot = sampleAnnot,
-                metAnnot = metAnnot,
-                annotCol = annotColors)
+                metAnnot = metAnnot)
 
 # PLOT SUBSET OF SPECIES - CHANGE GROUP PARAMETER
-# annoCol COULD BE OMITTED
 p = plotHeatMapGroup(d = scaled,
                      sampleAnnot = sampleAnnot,
                      metAnnot = metAnnot,
@@ -49,9 +46,8 @@ p = plotHeatMapGroup(d = scaled,
 
 ######################################################################################################
 
-## THIS WILL GENERATE PDF FILES
+
+
 df = generateDF(rawDat,sampleAnnot,metAnnot) # MASTER DF USED FOR ALL PLOTTING
 head(df)
 plotClassHeatmaps(df)
-
-
