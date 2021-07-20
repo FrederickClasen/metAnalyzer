@@ -42,7 +42,7 @@ scaleData = function(d , logscale=TRUE){
   return(scaled)
 }
 
-plotHeatMap = function(d,sampleAnnot,metAnnot,annotCol){
+plotHeatMap = function(d,sampleAnnot,metAnnot,annotCol=list()){
   paletteLength = 100
   myColor = colorRampPalette(c("blue","white", "red"))(paletteLength)
   myBreaks = c(seq(min(d), 0, length.out=ceiling(paletteLength/2) + 1), 
@@ -118,4 +118,32 @@ plotClassHeatmaps = function(df){
   }
 }
 
+speciesTtest = function(df,sampleAnnot){
+  vars = colnames(sampleAnnot)
+  out_df = resTable = as.data.frame(unique(df$Label))
+  for (i in vars){
+    combinations = combn(unique(df[i][[1]]),2)
+    #print(i)
+    for (j in 1:ncol(combinations)){
+      experiment_name = paste(combinations[1,j],combinations[2,j],sep='_vs_')
+      #print(c(combinations[,j]))
+      experiment_df = subset(df,df[,i] %in% c(combinations[,j]))
+      pvalues = c()
+      lfc = c()
+      for (k in unique(experiment_df$Label)){
+        label_df = subset(experiment_df,experiment_df$Label == k)
+        names(label_df)[names(label_df) == i[1]] <- 'testCol'
+        fc = mean(subset(label_df,label_df$testCol == combinations[1,j])$value) / mean(subset(label_df,label_df$testCol == combinations[2,j])$value)
+        t = t.test(value ~ testCol, data = label_df, var.equal = T)
+        pvalues = c(pvalues,t$p.value)
+        lfc = c(lfc,log2(fc))
+      }
+      out_df[paste('pval',experiment_name,sep='_')] = pvalues
+      out_df[paste('lfc',experiment_name,sep='_')] = lfc
+    }
+  }
+  row.names(out_df) = out_df[,1]
+  out_df[,1] = NULL
+  return(out_df)
+}
 
