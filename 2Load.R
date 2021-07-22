@@ -28,6 +28,11 @@ metAnnot[,1] = NULL
 # the first annotation column is renamed to as it is used later for plotting
 names(metAnnot)[names(metAnnot) == colnames(metAnnot[1])] <- 'Class'
 
+# only take the samples that overlap between sampleAnnot and rawDat
+samples = intersect(colnames(rawDat),rownames(sampleAnnot))
+rawDat = rawDat[,samples]
+sampleAnnot = sampleAnnot[samples,]
+
 head(rawDat,n=2)
 head(sampleAnnot,n=2)
 head(metAnnot,n=2)
